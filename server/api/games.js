@@ -12,11 +12,47 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+//fetches specific game from the database
+router.get('/:gameId', async (req, res, next) => {
+  try {
+    const id = req.params.gameId
+    console.log('gameId: ', id)
+    const game = await Game.findById(id)
+    console.log('game in route: ', game)
+    res.json(game)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //start a new game
 router.post('/', async (req, res, next) => {
   try {
     const newGame = await Game.create()
     res.json(newGame)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//changes status of game to in play
+router.put('/play/:gameId', async (req, res, next) => {
+  try {
+    const id = req.params.gameId
+    console.log('gameId in games routes: ', id)
+
+    await Game.update(
+      {
+        status: 'in play'
+      },
+      {
+        where: {id}
+      }
+    )
+    const updatedGame = await Game.findById(id)
+    console.log('updatedgame: ', updatedGame)
+
+    res.json(updatedGame)
   } catch (err) {
     next(err)
   }

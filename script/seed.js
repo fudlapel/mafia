@@ -26,13 +26,13 @@ async function seed() {
     Player.create({
       name: 'Bella',
       gameId: 2,
-      role: 'predator',
+      role: 'prey',
       status: 'alive'
     }),
     Player.create({
       name: 'Betty',
       gameId: 2,
-      role: 'predator',
+      role: 'prey',
       status: 'alive'
     }),
     Player.create({name: 'Brianne', gameId: 2, role: 'prey', status: 'alive'}),

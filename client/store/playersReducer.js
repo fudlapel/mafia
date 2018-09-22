@@ -3,11 +3,17 @@ import axios from 'axios'
 //ACTION TYPES
 const CREATE_PLAYER = 'CREATE_PLAYER'
 const GET_ALL_PLAYERS = 'GET_ALL_PLAYERS'
+const ASSIGN_ROLES = 'ASSIGN_ROLES'
 
 //ACTION CREATORS
 const creatingNewPlayer = player => ({type: CREATE_PLAYER, player})
 
 const gettingAllPlayers = allPlayers => ({type: GET_ALL_PLAYERS, allPlayers})
+
+const assigningPlayerRoles = updatedPlayers => ({
+  type: ASSIGN_ROLES,
+  updatedPlayers
+})
 
 //THUNK CREATOR
 export const goCreatePlayer = (name, gameCode) => async dispatch => {
@@ -37,6 +43,18 @@ export const fetchAllPlayers = gameId => async dispatch => {
   }
 }
 
+export const randomlyAssignRoles = gameId => async dispatch => {
+  try {
+    const res = await axios.put(`/api/players/roles/${gameId}`)
+    const assignedPlayers = res.data
+    console.log('assignedPlayers: ', assignedPlayers)
+    const action = assigningPlayerRoles(assignedPlayers)
+    dispatch(action)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 //INITIAL STATE
 const initialState = {
   thisPlayer: {},
@@ -57,6 +75,11 @@ const playersReducer = (state = initialState, action) => {
       return {
         ...state,
         allPlayers: action.allPlayers
+      }
+    case ASSIGN_ROLES:
+      return {
+        ...state,
+        allPlayers: action.updatedPlayers
       }
     default:
       return state

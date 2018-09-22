@@ -67,6 +67,10 @@ router.put('/roles/:gameId', async (req, res, next) => {
       await Player.update({role: 'predator'}, {where: {id: predatorIds[i]}})
     }
 
+    // const predators = await Player.findAll({where: {role: 'predator', gameId}})
+    // console.log('predators: ', predators)
+    //res.json(predatorIds)
+
     const updatedPlayers = await Player.findAll({where: {gameId}})
     console.log('updatedPlayers: ', updatedPlayers)
     res.json(updatedPlayers)

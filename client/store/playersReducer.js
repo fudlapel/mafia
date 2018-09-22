@@ -46,9 +46,9 @@ export const fetchAllPlayers = gameId => async dispatch => {
 export const randomlyAssignRoles = gameId => async dispatch => {
   try {
     const res = await axios.put(`/api/players/roles/${gameId}`)
-    const assignedPlayers = res.data
-    console.log('assignedPlayers: ', assignedPlayers)
-    const action = assigningPlayerRoles(assignedPlayers)
+    const updatedPlayers = res.data
+    console.log('updatedPlayers: ', updatedPlayers)
+    const action = assigningPlayerRoles(updatedPlayers)
     dispatch(action)
   } catch (err) {
     console.error(err)

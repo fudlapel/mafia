@@ -4,6 +4,7 @@ import {fetchAllPlayers} from '../store/playersReducer'
 import {goFetchGame} from '../store/gameReducer'
 import ConnectedStartPlayingButton from './startPlayingButton'
 import ConnectedAssignRoleButton from './assignRoleButton'
+import ConnectedBeginRoundButton from './beginRoundButton'
 
 class StatusList extends Component {
   componentDidMount() {
@@ -32,10 +33,11 @@ class StatusList extends Component {
             </li>
           ))}
         </ul>
-        {this.props.game.status === 'new' ? (
-          <ConnectedStartPlayingButton />
-        ) : (
-          <ConnectedAssignRoleButton />
+
+        {this.props.game.status === 'new' && <ConnectedStartPlayingButton />}
+        {this.props.game.status === 'in play' && <ConnectedAssignRoleButton />}
+        {this.props.game.status === 'roles assigned' && (
+          <ConnectedBeginRoundButton />
         )}
       </div>
     )

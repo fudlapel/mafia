@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import ConnectedCreatingJoiningGame from './creatingJoiningGame'
 import ConnectedStatusList from './statusList'
 
-class StartGame extends Component {
+class Game extends Component {
   render() {
     const thisPlayer = this.props.players.thisPlayer
     console.log('thisPlayer in StartGame: ', thisPlayer)
@@ -25,6 +25,6 @@ const mapStateToProps = state => {
   }
 }
 
-const ConnectedStartGame = connect(mapStateToProps)(StartGame)
+const ConnectedGame = connect(mapStateToProps)(Game)
 
-export default ConnectedStartGame
+export default ConnectedGame

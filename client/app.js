@@ -2,14 +2,14 @@ import React from 'react'
 
 import {Navbar} from './components'
 import Routes from './routes'
-import ConnectedStartGame from './components/startGame'
+import ConnectedGame from './components/game'
 
 const App = () => {
   return (
     <div>
       {/* <Navbar /> */}
       <Routes />
-      <ConnectedStartGame />
+      <ConnectedGame />
     </div>
   )
 }

@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllPlayers, randomlyAssignRoles} from '../store/playersReducer'
-import {goFetchGame, startGame} from '../store/gameReducer'
+import {goFetchGame, startGame, updateGameStatus} from '../store/gameReducer'
 
 class StatusList extends Component {
   constructor() {
     super()
     this.startPlayingGame = this.startPlayingGame.bind(this)
     this.assignRoles = this.assignRoles.bind(this)
+    //this.changeGameStatus = this.changeGameStatus.bind(this)
   }
 
   componentDidMount() {
@@ -22,10 +23,16 @@ class StatusList extends Component {
     this.props.startToPlayGame(gameId)
   }
 
-  assignRoles() {
+  assignRoles(status) {
     const gameId = this.props.players.thisPlayer.gameId
     this.props.assigningRoles(gameId)
+    this.props.updateGame(gameId, status)
   }
+
+  // changeGameStatus(status) {
+  //   const gameId = this.props.players.thisPlayer.gameId
+  //   this.props.updateGame(gameId, status)
+  // }
 
   render() {
     const players = this.props.players.allPlayers
@@ -33,7 +40,7 @@ class StatusList extends Component {
     console.log('Status List - players: ', players)
     console.log('typeof - players: ', typeof players)
     console.log('Status List - game: ', game)
-    console.log('typeof - game: ', typeof game)
+    console.log('typeof - game: ', typeof players)
 
     if (players === undefined || game === null) {
       return <p>one moment please</p>
@@ -61,7 +68,10 @@ class StatusList extends Component {
         ) : (
           <div>
             <p>The game is now in play! Click below to assign roles.</p>
-            <button type="submit" onClick={() => this.assignRoles()}>
+            <button
+              type="submit"
+              onClick={() => this.assignRoles('roles assigned')}
+            >
               Assign Roles: Predator vs Prey
             </button>
           </div>
@@ -83,7 +93,8 @@ const mapDispatchToProps = dispatch => {
     fetchInitialPlayers: gameId => dispatch(fetchAllPlayers(gameId)),
     fetchInitialGame: gameId => dispatch(goFetchGame(gameId)),
     startToPlayGame: gameId => dispatch(startGame(gameId)),
-    assigningRoles: gameId => dispatch(randomlyAssignRoles(gameId))
+    assigningRoles: gameId => dispatch(randomlyAssignRoles(gameId)),
+    updateGame: (gameId, status) => dispatch(updateGameStatus(gameId, status))
   }
 }
 

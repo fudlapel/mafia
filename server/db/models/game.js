@@ -14,7 +14,15 @@ const Game = db.define('game', {
     }
   },
   status: {
-    type: Sequelize.ENUM('new', 'in play', 'over'),
+    type: Sequelize.ENUM(
+      'new',
+      'in play',
+      'roles assigned',
+      'start round',
+      'in round',
+      'round over',
+      'game over'
+    ),
     defaultValue: 'new'
   }
 })

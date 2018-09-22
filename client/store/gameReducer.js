@@ -4,11 +4,13 @@ import axios from 'axios'
 const CREATE_GAME = 'CREATE_GAME'
 const FETCH_GAME = 'FETCH_GAME'
 const START_GAME = 'START_GAME'
+const CHANGE_GAME_STATUS = 'CHANGE_GAME_STATUS'
 
 //ACTION CREATORS
 const creatingNewGame = game => ({type: CREATE_GAME, game})
 const fetchingGame = game => ({type: FETCH_GAME, game})
 const startingGame = game => ({type: START_GAME, game})
+const changingGameStatus = game => ({type: CHANGE_GAME_STATUS, game})
 
 //THUNK CREATOR
 export const goCreateNewGame = () => async dispatch => {
@@ -35,10 +37,21 @@ export const goFetchGame = gameId => async dispatch => {
 
 export const startGame = gameId => async dispatch => {
   try {
-    console.log('gameId in games reducer: ', gameId)
+    //console.log('gameId in games reducer: ', gameId)
     const res = await axios.put(`/api/games/play/${gameId}`)
     const game = res.data
     const action = startingGame(game)
+    dispatch(action)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const updateGameStatus = (gameId, status) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/games/update/${gameId}/${status}`)
+    const game = res.data
+    const action = changingGameStatus(game)
     dispatch(action)
   } catch (err) {
     console.error(err)
@@ -57,6 +70,8 @@ const gameReducer = (state = initialState, action) => {
     case FETCH_GAME:
       return action.game
     case START_GAME:
+      return action.game
+    case CHANGE_GAME_STATUS:
       return action.game
     default:
       return state

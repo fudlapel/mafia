@@ -6,7 +6,7 @@ import {
   Login,
   Signup,
   UserHome,
-  ConnectedStartGame,
+  ConnectedGame,
   ConnectedStatusList
 } from './components'
 import {me} from './store'
@@ -27,7 +27,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         {/* <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} /> */}
-        <Route path="/" component={ConnectedStartGame} />
+        <Route path="/" component={ConnectedGame} />
         <Route path="/status" component={ConnectedStatusList} />
         {isLoggedIn && (
           <Switch>

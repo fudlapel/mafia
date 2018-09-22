@@ -35,11 +35,12 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-//changes status of game to in play
+//changes status of game to
+//--'in play'
 router.put('/play/:gameId', async (req, res, next) => {
   try {
     const id = req.params.gameId
-    console.log('gameId in games routes: ', id)
+    //console.log('gameId in games routes: ', id)
 
     await Game.update(
       {
@@ -52,6 +53,34 @@ router.put('/play/:gameId', async (req, res, next) => {
     const updatedGame = await Game.findById(id)
     console.log('updatedgame: ', updatedGame)
 
+    res.json(updatedGame)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//changes status of game to
+//--'roles assigned',
+//--'start round',
+//--'in round',
+//--'round over',
+//--'game over',
+router.put('/update/:gameId/:status', async (req, res, next) => {
+  try {
+    const id = req.params.gameId
+    const status = req.params.status
+    console.log('gameId in update game status route- id , status: ', id, status)
+
+    await Game.update(
+      {
+        status
+      },
+      {
+        where: {id}
+      }
+    )
+    const updatedGame = await Game.findById(id)
+    console.log('updatedgame: ', updatedGame)
     res.json(updatedGame)
   } catch (err) {
     next(err)

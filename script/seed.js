@@ -14,7 +14,7 @@ async function seed() {
 
   const games = await Promise.all([
     Game.create({status: 'in play'}),
-    Game.create()
+    Game.create({status: 'new'})
   ])
 
   const players = await Promise.all([
@@ -36,7 +36,31 @@ async function seed() {
       status: 'alive'
     }),
     Player.create({name: 'Brianne', gameId: 2, role: 'prey', status: 'alive'}),
-    Player.create({name: 'Brock', gameId: 2, role: 'prey', status: 'alive'})
+    Player.create({name: 'Brock', gameId: 2, role: 'prey', status: 'alive'}),
+    Player.create({
+      name: 'Bridget',
+      gameId: 2,
+      role: 'prey',
+      status: 'alive'
+    }),
+    Player.create({
+      name: 'Bailey',
+      gameId: 2,
+      role: 'prey',
+      status: 'alive'
+    }),
+    Player.create({name: 'Boris', gameId: 2, role: 'prey', status: 'alive'}),
+    Player.create({name: 'Beth', gameId: 2, role: 'prey', status: 'alive'}),
+    Player.create({name: 'Ben', gameId: 2, role: 'prey', status: 'alive'}),
+    Player.create({
+      name: 'Benjamin',
+      gameId: 2,
+      role: 'prey',
+      status: 'alive'
+    }),
+    Player.create({name: 'Buddy', gameId: 2, role: 'prey', status: 'alive'}),
+    Player.create({name: 'Bevel', gameId: 2, role: 'prey', status: 'alive'}),
+    Player.create({name: 'Briele', gameId: 2, role: 'prey', status: 'alive'})
   ])
 
   const rounds = await Promise.all([

@@ -35,7 +35,6 @@ router.post('/', async (req, res, next) => {
 
 //assign predator roles for players
 router.put('/roles/:gameId', async (req, res, next) => {
-
   //returns a random number between min (inclusive) and max (exclusive)
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
@@ -64,12 +63,9 @@ router.put('/roles/:gameId', async (req, res, next) => {
     let predatorIds = predatorIndices.map(index => players[index].id)
     console.log('predatorIds: ', predatorIds)
 
-    const update = async function(idArr, fieldToCHange, valueToChange) {
-      arr.forEach(function(id){
-        await Player.update({fieldToCHange: valueToChange}, {where: {id}})
-      })
+    for (let i = 0; i < predatorIds.length; i++) {
+      await Player.update({role: 'predator'}, {where: {id: predatorIds[i]}})
     }
-    console.log('update done: ', update)
 
     const updatedPlayers = await Player.findAll({where: {gameId}})
     console.log('updatedPlayers: ', updatedPlayers)

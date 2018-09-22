@@ -21,7 +21,8 @@ const mapStateToProps = state => {
     //user: state.user,
     newPlayer: state.newPlayer,
     players: state.players,
-    game: state.game
+    game: state.game,
+    round: state.round
   }
 }
 

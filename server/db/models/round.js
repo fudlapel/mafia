@@ -24,11 +24,8 @@ const Round = db.define('round', {
     }
   },
   status: {
-    type: Sequelize.ENUM('open', 'closed'),
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.ENUM('phase 1', 'phase 2', 'phase 3', 'closed'),
+    defaultValue: 'phase 1'
   }
 })
 

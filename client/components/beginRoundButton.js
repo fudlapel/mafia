@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateGameStatus} from '../store/gameReducer'
+import {goCreateRound} from '../store/roundReducer'
 
 class BeginRoundButton extends Component {
   constructor() {
@@ -11,6 +12,7 @@ class BeginRoundButton extends Component {
   beginNextRound(status) {
     const gameId = this.props.game.id
     this.props.updateGame(gameId, status)
+    this.props.startNewRound(gameId)
   }
 
   render() {
@@ -32,7 +34,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateGame: (gameId, status) => dispatch(updateGameStatus(gameId, status))
+    updateGame: (gameId, status) => dispatch(updateGameStatus(gameId, status)),
+    startNewRound: gameId => dispatch(goCreateRound(gameId))
   }
 }
 

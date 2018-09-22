@@ -25,14 +25,6 @@ class CreatingJoiningGame extends Component {
     this.props.writeNewPlayerCode(event.target.value)
   }
 
-  // handleSubmit(event) {
-  //   //event.preventDefault()
-  //   const {newPlayer} = this.props
-  //   const name = newPlayer.name
-  //   const gameCode = newPlayer.code
-  //   this.props.addPlayerToGame(name, gameCode)
-  // }
-
   addMe() {
     const {newPlayer} = this.props
     const name = newPlayer.name
@@ -56,7 +48,6 @@ class CreatingJoiningGame extends Component {
 
         {game.gameCode ? <p>NEW GAME CODE: {game.gameCode}</p> : <p />}
 
-        {/* <form onSubmit={() => this.handleSubmit()}> */}
         <div>
           <h3>Player: </h3>
           <input
@@ -80,7 +71,6 @@ class CreatingJoiningGame extends Component {
             Go!
           </button>
         </div>
-        {/* </form> */}
       </div>
     )
   }

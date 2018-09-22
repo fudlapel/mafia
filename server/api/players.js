@@ -7,7 +7,6 @@ router.get('/:gameId', async (req, res, next) => {
   try {
     const gameId = req.params.gameId
     const players = await Player.findAll({where: {gameId}})
-    //console.log('players in route: ', players)
     res.json(players)
   } catch (err) {
     next(err)
@@ -66,10 +65,6 @@ router.put('/roles/:gameId', async (req, res, next) => {
     for (let i = 0; i < predatorIds.length; i++) {
       await Player.update({role: 'predator'}, {where: {id: predatorIds[i]}})
     }
-
-    // const predators = await Player.findAll({where: {role: 'predator', gameId}})
-    // console.log('predators: ', predators)
-    //res.json(predatorIds)
 
     const updatedPlayers = await Player.findAll({where: {gameId}})
     console.log('updatedPlayers: ', updatedPlayers)

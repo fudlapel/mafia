@@ -40,7 +40,6 @@ router.post('/', async (req, res, next) => {
 router.put('/play/:gameId', async (req, res, next) => {
   try {
     const id = req.params.gameId
-    //console.log('gameId in games routes: ', id)
 
     await Game.update(
       {

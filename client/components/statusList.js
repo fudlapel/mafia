@@ -1,31 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchAllPlayers, randomlyAssignRoles} from '../store/playersReducer'
-import {goFetchGame, startGame, updateGameStatus} from '../store/gameReducer'
+import {fetchAllPlayers} from '../store/playersReducer'
+import {goFetchGame} from '../store/gameReducer'
 import ConnectedStartPlayingButton from './startPlayingButton'
+import ConnectedAssignRoleButton from './assignRoleButton'
 
 class StatusList extends Component {
-  constructor() {
-    super()
-    //this.startPlayingGame = this.startPlayingGame.bind(this)
-    this.assignRoles = this.assignRoles.bind(this)
-  }
-
   componentDidMount() {
     const gameId = this.props.players.thisPlayer.gameId
     this.props.fetchInitialPlayers(gameId)
     this.props.fetchInitialGame(gameId)
-  }
-
-  // startPlayingGame() {
-  //   const gameId = this.props.players.thisPlayer.gameId
-  //   this.props.startToPlayGame(gameId)
-  // }
-
-  assignRoles(status) {
-    const gameId = this.props.players.thisPlayer.gameId
-    this.props.assigningRoles(gameId)
-    this.props.updateGame(gameId, status)
   }
 
   render() {
@@ -49,23 +33,9 @@ class StatusList extends Component {
           ))}
         </ul>
         {this.props.game.status === 'new' ? (
-          // <div>
-          //   <button type="submit" onClick={() => this.startPlayingGame()}>
-          //     Ready? Start playing!
-          //   </button>
-          //   <p>This button will start the game and close it to new players.</p>
-          // </div>
           <ConnectedStartPlayingButton />
         ) : (
-          <div>
-            <p>The game is now in play! Click below to assign roles.</p>
-            <button
-              type="submit"
-              onClick={() => this.assignRoles('roles assigned')}
-            >
-              Assign Roles: Predator vs Prey
-            </button>
-          </div>
+          <ConnectedAssignRoleButton />
         )}
       </div>
     )
@@ -82,10 +52,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchInitialPlayers: gameId => dispatch(fetchAllPlayers(gameId)),
-    fetchInitialGame: gameId => dispatch(goFetchGame(gameId)),
-    //startToPlayGame: gameId => dispatch(startGame(gameId)),
-    assigningRoles: gameId => dispatch(randomlyAssignRoles(gameId)),
-    updateGame: (gameId, status) => dispatch(updateGameStatus(gameId, status))
+    fetchInitialGame: gameId => dispatch(goFetchGame(gameId))
   }
 }
 

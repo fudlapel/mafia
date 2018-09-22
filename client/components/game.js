@@ -8,10 +8,10 @@ class Game extends Component {
   render() {
     const thisPlayer = this.props.players.thisPlayer
     console.log('thisPlayer in StartGame: ', thisPlayer)
-    if (thisPlayer.name) {
-      return <ConnectedStatusList />
-    } else {
+    if (!thisPlayer.name) {
       return <ConnectedCreatingJoiningGame />
+    } else {
+      return <ConnectedStatusList />
     }
   }
 }

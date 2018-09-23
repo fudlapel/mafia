@@ -79,6 +79,9 @@ const playersReducer = (state = initialState, action) => {
     case ASSIGN_ROLES:
       return {
         ...state,
+        thisPlayer: action.updatedPlayers.filter(
+          player => player.id === state.thisPlayer.id
+        )[0],
         allPlayers: action.updatedPlayers
       }
     default:

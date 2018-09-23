@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {randomlyAssignRoles} from '../store/playersReducer'
 import {updateGameStatus} from '../store/gameReducer'
 
+//need to refetch this player with assigned role!!!!!
+
 class AssignRoleButton extends Component {
   constructor() {
     super()

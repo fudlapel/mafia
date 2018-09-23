@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import ConnectedKillNarration from './killNarration'
+import KillNarration from './killNarration'
 import ConnectedPredatorKillVote from './predatorKillVote'
 import ConnectedGuessNarration from './guessNarration'
 import ConnectedAllGuessVote from './allGuessVote'
@@ -14,25 +14,25 @@ class Round extends Component {
     return (
       <div>
         <h1>
-          ROUND: {round.roundType} Phase - {round.status}
+          ROUND: {round.roundType} - {round.status}
         </h1>
         {round.roundType === 'kill' &&
           round.status === 'phase 1' && (
             <div>
-              <ConnectedKillNarration />
+              <KillNarration />
               {/* timer */}
               <ConnectedPredatorKillVote />
             </div>
           )}
 
-        {round.roundType === 'guess' &&
+        {/* {round.roundType === 'guess' &&
           round.status === 'phase 1' && (
             <div>
-              <ConnectedGuessNarration />
-              {/* timer */}
-              <ConnectedAllGuessVote />
+              <ConnectedGuessNarration /> */}
+        {/* timer */}
+        {/* <ConnectedAllGuessVote />
             </div>
-          )}
+          )} */}
 
         {/* {round.roundType === 'kill' && round.status === 'phase 1' && <ConnectedPredatorKillVote />}
           {round.roundType === 'guess' && round.status === 'phase 1' && <ConnectedAllGuessVote />} */}

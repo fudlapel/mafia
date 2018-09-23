@@ -23,3 +23,33 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
+//changes status of round to
+//phase 2
+//phase 3
+//closed
+router.put('/update/:roundId/:status', async (req, res, next) => {
+  try {
+    const id = req.params.roundId
+    const status = req.params.status
+    console.log(
+      'gameId in update ROUND status route- id , status: ',
+      id,
+      status
+    )
+
+    await Round.update(
+      {
+        status
+      },
+      {
+        where: {id}
+      }
+    )
+    const updatedRound = await Round.findById(id)
+    console.log('updatedRound: ', updatedRound)
+    res.json(updatedRound)
+  } catch (err) {
+    next(err)
+  }
+})

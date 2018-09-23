@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllPlayers, killPrey} from '../store/playersReducer'
 import {goFetchGame} from '../store/gameReducer'
+import {updatingRound} from '../store/roundReducer'
 
 class PredatorKillVote extends Component {
   componentDidMount() {
@@ -14,7 +15,9 @@ class PredatorKillVote extends Component {
   killPlayer(playerId) {
     //kill player + update round to phase 2
     const gameId = this.props.game.id
+    const roundId = this.props.round.id
     this.props.killPreyPlayer(playerId, gameId)
+    this.props.updateRound(roundId, 'phase 2')
   }
 
   render() {
@@ -64,7 +67,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchInitialPlayers: gameId => dispatch(fetchAllPlayers(gameId)),
     fetchInitialGame: gameId => dispatch(goFetchGame(gameId)),
-    killPreyPlayer: (playerId, gameId) => dispatch(killPrey(playerId, gameId))
+    killPreyPlayer: (playerId, gameId) => dispatch(killPrey(playerId, gameId)),
+    updateRound: (roundId, status) => dispatch(updatingRound(roundId, status))
   }
 }
 

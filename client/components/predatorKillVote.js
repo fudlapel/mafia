@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchAllPlayers} from '../store/playersReducer'
+import {fetchAllPlayers, killPrey} from '../store/playersReducer'
 import {goFetchGame} from '../store/gameReducer'
 
 class PredatorKillVote extends Component {
@@ -8,11 +8,18 @@ class PredatorKillVote extends Component {
     const gameId = this.props.players.thisPlayer.gameId
     this.props.fetchInitialPlayers(gameId)
     this.props.fetchInitialGame(gameId)
+    this.killPlayer = this.killPlayer.bind(this)
+  }
+
+  killPlayer(playerId) {
+    //kill player + update round to phase 2
+    const gameId = this.props.game.id
+    this.props.killPreyPlayer(playerId, gameId)
   }
 
   render() {
     const prey = this.props.players.allPlayers.filter(
-      player => player.role === 'prey'
+      player => player.role === 'prey' && player.status === 'alive'
     )
     console.log('prey: ', prey)
     if (!prey.length) {
@@ -30,7 +37,12 @@ class PredatorKillVote extends Component {
             prey.map(player => {
               return (
                 <li key={player.id}>
-                  <button type="submit">{player.name}</button>
+                  <button
+                    type="submit"
+                    onClick={() => this.killPlayer(player.id)}
+                  >
+                    {player.name}
+                  </button>
                 </li>
               )
             })}
@@ -51,7 +63,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchInitialPlayers: gameId => dispatch(fetchAllPlayers(gameId)),
-    fetchInitialGame: gameId => dispatch(goFetchGame(gameId))
+    fetchInitialGame: gameId => dispatch(goFetchGame(gameId)),
+    killPreyPlayer: (playerId, gameId) => dispatch(killPrey(playerId, gameId))
   }
 }
 

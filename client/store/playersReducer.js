@@ -4,6 +4,7 @@ import axios from 'axios'
 const CREATE_PLAYER = 'CREATE_PLAYER'
 const GET_ALL_PLAYERS = 'GET_ALL_PLAYERS'
 const ASSIGN_ROLES = 'ASSIGN_ROLES'
+const KILL_PREY = 'KILL_PREY'
 
 //ACTION CREATORS
 const creatingNewPlayer = player => ({type: CREATE_PLAYER, player})
@@ -12,6 +13,11 @@ const gettingAllPlayers = allPlayers => ({type: GET_ALL_PLAYERS, allPlayers})
 
 const assigningPlayerRoles = updatedPlayers => ({
   type: ASSIGN_ROLES,
+  updatedPlayers
+})
+
+const killingPrey = updatedPlayers => ({
+  type: KILL_PREY,
   updatedPlayers
 })
 
@@ -55,6 +61,18 @@ export const randomlyAssignRoles = gameId => async dispatch => {
   }
 }
 
+export const killPrey = (playerId, gameId) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/players/kill/${playerId}/${gameId}`)
+    const updatedPlayers = res.data
+    console.log('updatedPlayers: ', updatedPlayers)
+    const action = killingPrey(updatedPlayers)
+    dispatch(action)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 //INITIAL STATE
 const initialState = {
   thisPlayer: {},
@@ -77,6 +95,14 @@ const playersReducer = (state = initialState, action) => {
         allPlayers: action.allPlayers
       }
     case ASSIGN_ROLES:
+      return {
+        ...state,
+        thisPlayer: action.updatedPlayers.filter(
+          player => player.id === state.thisPlayer.id
+        )[0],
+        allPlayers: action.updatedPlayers
+      }
+    case KILL_PREY:
       return {
         ...state,
         thisPlayer: action.updatedPlayers.filter(

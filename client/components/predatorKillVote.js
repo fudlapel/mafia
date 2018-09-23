@@ -1,14 +1,27 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {fetchAllPlayers} from '../store/playersReducer'
+import {goFetchGame} from '../store/gameReducer'
 
 class PredatorKillVote extends Component {
   componentDidMount() {
-    //fetch intitial players
+    const gameId = this.props.players.thisPlayer.gameId
+    this.props.fetchInitialPlayers(gameId)
+    this.props.fetchInitialGame(gameId)
   }
 
   render() {
-    const prey = this.props.players.filter(player => player.role === 'prey')
+    const prey = this.props.players.allPlayers.filter(
+      player => player.role === 'prey'
+    )
     console.log('prey: ', prey)
+    if (!prey.length) {
+      return <p>loading/not enough players</p>
+    }
+
+    if (this.props.players.thisPlayer.role === 'prey') {
+      return <span>{}</span>
+    }
 
     return (
       <div>
@@ -30,13 +43,16 @@ class PredatorKillVote extends Component {
 const mapStateToProps = state => {
   return {
     players: state.players,
-    //game: state.game,
+    game: state.game,
     round: state.round
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    fetchInitialPlayers: gameId => dispatch(fetchAllPlayers(gameId)),
+    fetchInitialGame: gameId => dispatch(goFetchGame(gameId))
+  }
 }
 
 const ConnectedPredatorKillVote = connect(mapStateToProps, mapDispatchToProps)(

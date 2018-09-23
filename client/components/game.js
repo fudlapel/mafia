@@ -3,12 +3,16 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import ConnectedCreatingJoiningGame from './creatingJoiningGame'
 import ConnectedStatusList from './statusList'
+import ConnectedRound from './round'
 
 class Game extends Component {
   render() {
     const thisPlayer = this.props.players.thisPlayer
     console.log('thisPlayer in StartGame: ', thisPlayer)
-    if (!thisPlayer.name) {
+
+    if (this.props.round.id) {
+      return <ConnectedRound />
+    } else if (!thisPlayer.name) {
       return <ConnectedCreatingJoiningGame />
     } else {
       return <ConnectedStatusList />

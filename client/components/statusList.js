@@ -34,11 +34,9 @@ class StatusList extends Component {
           ))}
         </ul>
 
-        {this.props.game.status === 'new' && <ConnectedStartPlayingButton />}
-        {this.props.game.status === 'in play' && <ConnectedAssignRoleButton />}
-        {this.props.game.status === 'roles assigned' && (
-          <ConnectedBeginRoundButton />
-        )}
+        {game.status === 'new' && <ConnectedStartPlayingButton />}
+        {game.status === 'in play' && <ConnectedAssignRoleButton />}
+        {game.status === 'roles assigned' && <ConnectedBeginRoundButton />}
       </div>
     )
   }

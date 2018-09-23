@@ -28,26 +28,39 @@ router.post('/', async (req, res, next) => {
 //phase 2
 //phase 3
 //closed
-router.put('/update/:roundId/:status/:playerId', async (req, res, next) => {
+router.put('/update/:roundId', async (req, res, next) => {
   try {
     const id = req.params.roundId
-    const status = req.params.status
-    const playerId = req.params.playerId
+    const status = req.body.status
+    const playerId = req.body.playerId
     console.log(
-      'gameId in update ROUND status route- id , status: ',
+      'gameId in update ROUND status route- id , status, playerId: ',
       id,
-      status
+      status,
+      playerId
     )
 
-    await Round.update(
-      {
-        status,
-        chosenPlayerId: playerId
-      },
-      {
-        where: {id}
-      }
-    )
+    if (playerId) {
+      await Round.update(
+        {
+          status,
+          chosenPlayerId: playerId
+        },
+        {
+          where: {id}
+        }
+      )
+    } else {
+      await Round.update(
+        {
+          status
+        },
+        {
+          where: {id}
+        }
+      )
+    }
+
     const updatedRound = await Round.findById(id)
     console.log('updatedRound: ', updatedRound)
     res.json(updatedRound)

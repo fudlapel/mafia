@@ -25,9 +25,12 @@ export const goCreateRound = (gameId, currentRound) => async dispatch => {
 
 export const updatingRound = (roundId, status, playerId) => async dispatch => {
   try {
-    const res = await axios.put(
-      `/api/rounds/update/${roundId}/${status}/${playerId}`
-    )
+    let bodyObj = {status}
+    if (playerId) {
+      bodyObj.playerId = playerId
+    }
+    console.log('bodyObj: ', bodyObj)
+    const res = await axios.put(`/api/rounds/update/${roundId}`, bodyObj)
     const round = res.data
     const action = changingRoundStatus(round)
     dispatch(action)

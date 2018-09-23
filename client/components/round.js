@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import KillNarration from './killNarration'
 import ConnectedPredatorKillVote from './predatorKillVote'
+import ConnectedContinueRoundButton from './continueRoundButton'
+import ConnectedStatusList from './statusList'
 import ConnectedGuessNarration from './guessNarration'
 import ConnectedAllGuessVote from './allGuessVote'
 import KillResult from './killResult'
@@ -11,6 +13,11 @@ class Round extends Component {
 
   render() {
     const {round} = this.props
+    const {players} = this.props
+    const killedPlayerId = round.chosenPlayerId
+    const killedPlayer = players.allPlayers.filter(
+      player => player.id === killedPlayerId
+    )[0]
 
     return (
       <div>
@@ -28,7 +35,17 @@ class Round extends Component {
         {round.roundType === 'kill' &&
           round.status === 'phase 2' && (
             <div>
-              <KillResult />
+              <KillResult killedPlayer={killedPlayer} />
+              <ConnectedContinueRoundButton />
+            </div>
+          )}
+
+        {round.roundType === 'kill' &&
+          round.status === 'phase 3' && (
+            <div>
+              <ConnectedStatusList />
+              {/* <KillResult killedPlayer={killedPlayer} />
+              <ConnectedContinueRoundButton /> */}
             </div>
           )}
 

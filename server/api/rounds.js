@@ -28,10 +28,11 @@ router.post('/', async (req, res, next) => {
 //phase 2
 //phase 3
 //closed
-router.put('/update/:roundId/:status', async (req, res, next) => {
+router.put('/update/:roundId/:status/:playerId', async (req, res, next) => {
   try {
     const id = req.params.roundId
     const status = req.params.status
+    const playerId = req.params.playerId
     console.log(
       'gameId in update ROUND status route- id , status: ',
       id,
@@ -40,7 +41,8 @@ router.put('/update/:roundId/:status', async (req, res, next) => {
 
     await Round.update(
       {
-        status
+        status,
+        chosenPlayerId: playerId
       },
       {
         where: {id}

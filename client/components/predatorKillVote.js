@@ -17,7 +17,7 @@ class PredatorKillVote extends Component {
     const gameId = this.props.game.id
     const roundId = this.props.round.id
     this.props.killPreyPlayer(playerId, gameId)
-    this.props.updateRound(roundId, 'phase 2')
+    this.props.updateRound(roundId, 'phase 2', playerId)
   }
 
   render() {
@@ -68,7 +68,8 @@ const mapDispatchToProps = dispatch => {
     fetchInitialPlayers: gameId => dispatch(fetchAllPlayers(gameId)),
     fetchInitialGame: gameId => dispatch(goFetchGame(gameId)),
     killPreyPlayer: (playerId, gameId) => dispatch(killPrey(playerId, gameId)),
-    updateRound: (roundId, status) => dispatch(updatingRound(roundId, status))
+    updateRound: (roundId, status, playerId) =>
+      dispatch(updatingRound(roundId, status, playerId))
   }
 }
 

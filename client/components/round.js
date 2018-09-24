@@ -24,14 +24,13 @@ class Round extends Component {
         <h1>
           ROUND: {round.roundType} - {round.status}
         </h1>
-        {round.roundType === 'kill' &&
-          round.status === 'phase 1' && (
-            <div>
-              <KillNarration />
-              {/* timer */}
-              <ConnectedPredatorKillVote />
-            </div>
-          )}
+        {round.roundType === 'kill' && (
+          <div>
+            <KillNarration />
+            {/* timer */}
+            <ConnectedPredatorKillVote />
+          </div>
+        )}
         {round.roundType === 'kill' &&
           round.status === 'phase 2' && (
             <div>
@@ -44,8 +43,7 @@ class Round extends Component {
           round.status === 'phase 3' && (
             <div>
               <ConnectedStatusList />
-              {/* <KillResult killedPlayer={killedPlayer} />
-              <ConnectedContinueRoundButton /> */}
+              <ConnectedContinueRoundButton />
             </div>
           )}
 

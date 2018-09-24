@@ -1,11 +1,14 @@
 import axios from 'axios'
+//++++++++++++
+import socket from '../socket'
+//++++++++++++
 
 //ACTION TYPES
 const CREATE_ROUND = 'CREATE_ROUND'
 const CHANGE_ROUND_STATUS = 'CHANGE_ROUND_STATUS'
 
 //ACTION CREATORS
-const creatingNewRound = round => ({type: CREATE_ROUND, round})
+export const creatingNewRound = round => ({type: CREATE_ROUND, round})
 const changingRoundStatus = updatedRound => ({
   type: CHANGE_ROUND_STATUS,
   updatedRound
@@ -18,6 +21,7 @@ export const goCreateRound = (gameId, currentRound) => async dispatch => {
     const round = res.data
     const action = creatingNewRound(round)
     dispatch(action)
+    socket.emit('new-round', round)
   } catch (err) {
     console.error(err)
   }
@@ -34,6 +38,7 @@ export const updatingRound = (roundId, status, playerId) => async dispatch => {
     const round = res.data
     const action = changingRoundStatus(round)
     dispatch(action)
+    //socket.emit('round-status-change', round)
   } catch (err) {
     console.error(err)
   }

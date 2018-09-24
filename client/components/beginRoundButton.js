@@ -19,7 +19,7 @@ class BeginRoundButton extends Component {
     return (
       <div>
         <button type="submit" onClick={() => this.beginNextRound('in round')}>
-          ~Begin Next Round~
+          ~Begin Round~
         </button>
       </div>
     )

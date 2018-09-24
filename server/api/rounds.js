@@ -7,6 +7,7 @@ router.post('/', async (req, res, next) => {
   try {
     const gameId = req.body.gameId
     const currentRound = req.body.currentRound
+    console.log('currentRound in CREATE NEW ROUND: ', currentRound)
 
     let roundType = 'kill'
     if (currentRound) {
@@ -17,7 +18,6 @@ router.post('/', async (req, res, next) => {
 
     const round = await Round.create({gameId, roundType})
     console.log('NEW ROUND: ', round)
-
     res.json(round)
   } catch (err) {
     next(err)

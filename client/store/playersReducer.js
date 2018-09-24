@@ -1,10 +1,15 @@
 import axios from 'axios'
+//++++++++++++
+import socket from '../socket'
+//++++++++++++
 
 //ACTION TYPES
 const CREATE_PLAYER = 'CREATE_PLAYER'
 const GET_ALL_PLAYERS = 'GET_ALL_PLAYERS'
 const ASSIGN_ROLES = 'ASSIGN_ROLES'
 const KILL_PREY = 'KILL_PREY'
+
+const ADDING_NEW_PLAYER = 'ADDING_NEW_PLAYER'
 
 //ACTION CREATORS
 const creatingNewPlayer = player => ({type: CREATE_PLAYER, player})
@@ -21,6 +26,8 @@ const killingPrey = updatedPlayers => ({
   updatedPlayers
 })
 
+export const addingNewPlayer = player => ({type: ADDING_NEW_PLAYER, player})
+
 //THUNK CREATOR
 export const goCreatePlayer = (name, gameCode) => async dispatch => {
   try {
@@ -29,6 +36,8 @@ export const goCreatePlayer = (name, gameCode) => async dispatch => {
     if (player.name) {
       const action = creatingNewPlayer(player)
       dispatch(action)
+      dispatch(addingNewPlayer(player))
+      socket.emit('new-player', player)
     }
     //else {
     //error that the game the player is attempting to join is already in lay
@@ -86,8 +95,7 @@ const playersReducer = (state = initialState, action) => {
     case CREATE_PLAYER:
       return {
         ...state,
-        thisPlayer: action.player,
-        allPlayers: [...state.allPlayers, action.player]
+        thisPlayer: action.player
       }
     case GET_ALL_PLAYERS:
       return {
@@ -110,6 +118,8 @@ const playersReducer = (state = initialState, action) => {
         )[0],
         allPlayers: action.updatedPlayers
       }
+    case ADDING_NEW_PLAYER:
+      return {...state, allPlayers: [...state.allPlayers, action.player]}
     default:
       return state
   }

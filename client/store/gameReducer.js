@@ -1,4 +1,7 @@
 import axios from 'axios'
+//++++++++++++
+import socket from '../socket'
+//++++++++++++
 
 //ACTION TYPES
 const CREATE_GAME = 'CREATE_GAME'
@@ -10,7 +13,7 @@ const CHANGE_GAME_STATUS = 'CHANGE_GAME_STATUS'
 const creatingNewGame = game => ({type: CREATE_GAME, game})
 const fetchingGame = game => ({type: FETCH_GAME, game})
 const startingGame = game => ({type: START_GAME, game})
-const changingGameStatus = game => ({type: CHANGE_GAME_STATUS, game})
+export const changingGameStatus = game => ({type: CHANGE_GAME_STATUS, game})
 
 //THUNK CREATOR
 export const goCreateNewGame = () => async dispatch => {
@@ -53,6 +56,7 @@ export const updateGameStatus = (gameId, status) => async dispatch => {
     const game = res.data
     const action = changingGameStatus(game)
     dispatch(action)
+    socket.emit('game-status-change', game)
   } catch (err) {
     console.error(err)
   }

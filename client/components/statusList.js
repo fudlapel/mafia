@@ -4,7 +4,7 @@ import {fetchAllPlayers} from '../store/playersReducer'
 import {goFetchGame} from '../store/gameReducer'
 import ConnectedStartPlayingButton from './startPlayingButton'
 import ConnectedAssignRoleButton from './assignRoleButton'
-import ConnectedBeginRoundButton from './beginRoundButton'
+import ConnectedContinueRoundButton from './continueRoundButton'
 
 class StatusList extends Component {
   componentDidMount() {
@@ -36,7 +36,7 @@ class StatusList extends Component {
 
         {game.status === 'new' && <ConnectedStartPlayingButton />}
         {game.status === 'in play' && <ConnectedAssignRoleButton />}
-        {game.status === 'roles assigned' && <ConnectedBeginRoundButton />}
+        {game.status === 'roles assigned' && <ConnectedContinueRoundButton />}
       </div>
     )
   }

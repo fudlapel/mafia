@@ -22,3 +22,8 @@ const store = createStore(reducer, middleware)
 
 export default store
 export * from './user'
+//--
+export * from './gameReducer'
+export * from './newPlayerReducer'
+export * from './playersReducer'
+export * from './roundReducer'
